@@ -1,23 +1,50 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StyleSheet, View, Button, Text } from "react-native";
+import Pushbots from "pushbots-react-native";
+
+
+Pushbots.registerForRemoteNotifications();
 
 export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-      </View>
-    );
-  }
+    constructor() {
+        super();
+        this.state = {
+            dynamicText: ""
+        }
+    }
+
+    execClick() {
+        this.setState({
+            dynamicText: "Hello World!"
+        });
+    }
+
+    render() {
+        return (
+            <View style={ styles.container }>
+                <View style={ styles.btn }>
+                    <Button
+                        style={ styles.bigfont }
+                        onPress={ this.execClick.bind( this ) }
+                        title="Click here" />
+                </View>
+                <Text>{ this.state.dynamicText }</Text>
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    container: {
+        backgroundColor: "#fff"
+    },
+    btn: {
+        width: "100%",
+        height: 60,
+        margin: 20,
+        fontSize: 44
+    },
+    bigfont: {
+        fontSize: 44
+    }
 });

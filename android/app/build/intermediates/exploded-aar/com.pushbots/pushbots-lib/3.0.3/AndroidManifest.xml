@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.pushbots.push" >
+
+    <uses-sdk android:minSdkVersion="15" />
+
+    <permission
+        android:name="${applicationId}.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="${applicationId}.permission.C2D_MESSAGE" />
+
+    <!-- GCM connects to Google Services. -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- GCM requires a Google account. -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- This app has permission to register and receive GCM messages. -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" /> <!-- [optional], In case you plan to use vibration in your app -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application>
+        <meta-data
+            android:name="pushbots_app_id"
+            android:value="${pushbots_app_id}" />
+        <meta-data
+            android:name="google_sender_id"
+            android:value="s:${google_sender_id}" />
+        <meta-data
+            android:name="pushbots_loglevel"
+            android:value="${pushbots_loglevel}" />
+
+        <receiver
+            android:name="com.pushbots.push.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.pushbots.push.DefaultPushHandler" />
+
+        <service android:name="com.pushbots.push.GCMIntentService" />
+    </application>
+
+</manifest>
